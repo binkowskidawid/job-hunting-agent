@@ -1,0 +1,15 @@
+[project]
+name = "job-hunting-app"
+version = "0.1.0"
+description = "A CV-based job offer monitoring agent that learns from your feedback."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+ml = ["scikit-learn", "numpy"]
+extension = ["langgraph", "langgraph-checkpoint-postgres"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
