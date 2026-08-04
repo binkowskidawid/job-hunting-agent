@@ -1,0 +1,31 @@
+# Hard filters — filled in BY HAND, these are your decisions, not something to infer.
+# Every field below is an EXAMPLE VALUE. Replace it with your real minimum before using it.
+
+salary:
+  min_b2b_month: 0            # EDIT ME — PLN net
+  min_employment_month: 0     # EDIT ME — PLN gross
+  min_hourly_b2b: 0           # EDIT ME
+  missing_range: flag         # reject | pass | flag
+
+work_mode:
+  accepted: [remote]          # EDIT ME — add hybrid if relevant
+  hybrid_allowed_cities: []   # EDIT ME
+
+contract_type:
+  accepted: [b2b]             # EDIT ME
+  preferred: b2b
+
+level:
+  accepted: [mid, senior, lead]
+  reject_outright: [junior, intern, trainee]
+
+stop_words:
+  title: []                   # EDIT ME — grows over the first two weeks of use
+  description: []
+
+technologies:
+  required_at_least_one: []   # EDIT ME
+  big_plus: []
+  neutral: []
+  minus: []
+  veto: []
