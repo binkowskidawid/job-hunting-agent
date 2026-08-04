@@ -3,7 +3,7 @@ name = "job-hunting-app"
 version = "0.1.0"
 description = "A CV-based job offer monitoring agent that learns from your feedback."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 dependencies = [
     "anthropic>=0.120.2",
     "apscheduler>=3.11.3",
@@ -25,14 +25,14 @@ package = false
 
 [tool.ruff]
 line-length = 100
-target-version = "py312"
+target-version = "py314"
 src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.14"
 strict = true
 disallow_untyped_defs = true
 mypy_path = "src"
