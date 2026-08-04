@@ -6,6 +6,8 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "anthropic>=0.120.2",
+    "apscheduler>=3.11.3",
+    "discord-py>=2.7.1",
     "httpx>=0.28.1",
     "imap-tools>=1.14.0",
     "numpy>=2.5.1",
@@ -34,6 +36,11 @@ python_version = "3.12"
 strict = true
 disallow_untyped_defs = true
 mypy_path = "src"
+
+[[tool.mypy.overrides]]
+# APScheduler 3.x ships no inline types and no stub package exists on PyPI (verified 2026-08-04).
+module = "apscheduler.*"
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
