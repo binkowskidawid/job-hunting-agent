@@ -5,8 +5,13 @@ import pytest
 from learning.weights import thresholds_for_stage, weights_for_stage
 
 EXPECTED_SIGNAL_KEYS = {
-    "profile_similarity", "preference_similarity", "knn",
-    "tech_bonus", "tech_penalty", "salary", "freshness",
+    "profile_similarity",
+    "preference_similarity",
+    "knn",
+    "tech_bonus",
+    "tech_penalty",
+    "salary",
+    "freshness",
 }
 
 

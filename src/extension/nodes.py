@@ -10,6 +10,7 @@ from extension.state import State
 def draft_node(deps: object) -> Callable[[State], dict[str, Any]]:
     def run(state: State) -> dict[str, Any]:
         raise NotImplementedError
+
     return run
 
 
@@ -20,4 +21,5 @@ def review_node(state: State) -> dict[str, Any]:
 def finalize_node(deps: object) -> Callable[[State], dict[str, Any]]:
     def run(state: State) -> dict[str, Any]:
         raise NotImplementedError
+
     return run

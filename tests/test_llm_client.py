@@ -14,8 +14,14 @@ def test_llm_response_has_expected_fields() -> None:
 def test_llm_client_structured_signature() -> None:
     sig = inspect.signature(LLMClient.structured)
     assert list(sig.parameters) == [
-        "self", "system", "user_content", "tool_name", "schema",
-        "tool_description", "model", "cache_system",
+        "self",
+        "system",
+        "user_content",
+        "tool_name",
+        "schema",
+        "tool_description",
+        "model",
+        "cache_system",
     ]
 
 

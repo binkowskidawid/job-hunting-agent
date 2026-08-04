@@ -17,8 +17,7 @@ TOOLS = [
     {
         "name": "search_cv_highlights",
         "description": (
-            "Searches your CV for achievements most relevant to a given requirement "
-            "from the offer."
+            "Searches your CV for achievements most relevant to a given requirement from the offer."
         ),
         "input_schema": {
             "type": "object",

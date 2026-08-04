@@ -19,7 +19,10 @@ def test_offer_minimal_construction() -> None:
 
 def test_offer_multilocation_is_a_list() -> None:
     offer = Offer(
-        source="manual", external_id="1", url=HttpUrl("https://example.com/job/1"),
-        title="x", locations=["Warsaw", "Wrocław"],
+        source="manual",
+        external_id="1",
+        url=HttpUrl("https://example.com/job/1"),
+        title="x",
+        locations=["Warsaw", "Wrocław"],
     )
     assert offer.locations == ["Warsaw", "Wrocław"]
