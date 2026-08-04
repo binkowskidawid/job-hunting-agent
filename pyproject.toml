@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-ml = ["scikit-learn", "numpy"]
+ml = ["scikit-learn"]
 extension = [
     "fastapi>=0.141.1",
     "langgraph",

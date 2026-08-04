@@ -18,6 +18,8 @@ help: ## Show available commands
 
 up: ## Build and start postgres, ollama, app, then pull the embedding model
 	$(COMPOSE) up -d --build postgres ollama app
+	# `up -d` above returns as soon as containers are started, not once postgres is healthy —
+	# force that wait explicitly so the pull-models step below never races a cold Postgres.
 	$(COMPOSE) up -d --wait postgres
 	./scripts/ollama-pull-models.sh
 

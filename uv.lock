@@ -549,7 +549,6 @@ extension = [
     { name = "uvicorn" },
 ]
 ml = [
-    { name = "numpy" },
     { name = "scikit-learn" },
 ]
 
@@ -573,7 +572,6 @@ requires-dist = [
     { name = "langgraph", marker = "extra == 'extension'" },
     { name = "langgraph-checkpoint-postgres", marker = "extra == 'extension'" },
     { name = "numpy", specifier = ">=2.5.1" },
-    { name = "numpy", marker = "extra == 'ml'" },
     { name = "ollama", specifier = ">=0.6.2" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.4" },
     { name = "pydantic", specifier = ">=2.13.4" },
