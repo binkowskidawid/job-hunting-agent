@@ -10,11 +10,11 @@ EXPECTED_SIGNAL_KEYS = {
 }
 
 
-def test_weights_for_stage_not_yet_implemented():
+def test_weights_for_stage_not_yet_implemented() -> None:
     with pytest.raises(NotImplementedError):
         weights_for_stage(0)
 
 
-def test_thresholds_for_stage_not_yet_implemented():
+def test_thresholds_for_stage_not_yet_implemented() -> None:
     with pytest.raises(NotImplementedError):
         thresholds_for_stage(0)

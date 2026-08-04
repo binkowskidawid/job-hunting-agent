@@ -6,6 +6,6 @@ import pytest
 from scoring.decision import decide
 
 
-def test_decide_is_not_yet_implemented():
+def test_decide_is_not_yet_implemented() -> None:
     with pytest.raises(NotImplementedError):
         decide(0.5, {"low": 0.3, "high": 0.7}, {})
