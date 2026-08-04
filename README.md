@@ -25,7 +25,7 @@ project that needs LangGraph.
 
 ```bash
 git clone <this-repo>
-cd job-hunting-app
+cd job-hunting-agent
 cp .env.example .env   # fill in ANTHROPIC_API_KEY, DISCORD_BOT_TOKEN, etc.
 make up
 ```

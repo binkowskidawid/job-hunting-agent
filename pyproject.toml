@@ -1,5 +1,5 @@
 [project]
-name = "job-hunting-app"
+name = "job-hunting-agent"
 version = "0.1.0"
 description = "A CV-based job offer monitoring agent that learns from your feedback."
 readme = "README.md"

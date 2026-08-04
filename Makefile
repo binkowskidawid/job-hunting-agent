@@ -1,4 +1,4 @@
-# job-hunting-app. `make help` lists available commands.
+# job-hunting-agent. `make help` lists available commands.
 .DEFAULT_GOAL := help
 COMPOSE := docker compose
 
