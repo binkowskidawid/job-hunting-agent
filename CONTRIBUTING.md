@@ -31,13 +31,13 @@ By participating in this project, you agree to abide by our [Code of Conduct](./
 2. **Start the dev stack:**
 
    ```bash
-   docker compose up -d
+   make up
    ```
 
 3. **Install dependencies locally** (for fast lint/typecheck/test without the full stack):
 
    ```bash
-   uv sync
+   make sync
    ```
 
 4. **Make your changes.** Follow the code standards below.
@@ -45,14 +45,11 @@ By participating in this project, you agree to abide by our [Code of Conduct](./
 5. **Run checks before pushing** (mirrors CI exactly):
 
    ```bash
-   uv run ruff format --check .
-   uv run ruff check .
-   uv run mypy src tests
-   uv run pytest
+   make check
    ```
 
-   > The pre-commit hook (`uv run pre-commit install`) runs ruff automatically on staged
-   > files — the commands above are a full-repo sanity check.
+   > The pre-commit hook (`make install-hooks`) runs ruff automatically on staged files —
+   > `make check` above is a full-repo sanity check. Run `make help` to see every command.
 
 6. **Commit** using Conventional Commits:
 

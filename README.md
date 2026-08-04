@@ -27,16 +27,18 @@ project that needs LangGraph.
 git clone <this-repo>
 cd job-hunting-app
 cp .env.example .env   # fill in ANTHROPIC_API_KEY, DISCORD_BOT_TOKEN, etc.
-docker compose up -d
+make up
 ```
 
-This starts PostgreSQL (with `pgvector`), Ollama (local embeddings), and the app itself.
+This builds and starts PostgreSQL (with `pgvector`), Ollama, and the app, then pulls the
+`nomic-embed-text` embedding model into Ollama so nothing needs a manual setup step. Run
+`make help` to see every available command.
 
 For local development without Docker:
 
 ```bash
-uv sync
-uv run pytest
+make sync
+make test
 ```
 
 ## Status
