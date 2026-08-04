@@ -18,7 +18,11 @@ dependencies = [
 
 [project.optional-dependencies]
 ml = ["scikit-learn", "numpy"]
-extension = ["langgraph", "langgraph-checkpoint-postgres"]
+extension = [
+    "fastapi>=0.141.1",
+    "langgraph",
+    "langgraph-checkpoint-postgres",
+]
 
 [tool.uv]
 package = false
