@@ -21,6 +21,24 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+    # The deduplication tests assert database behaviour — a UNIQUE constraint and the
+    # inserted-versus-updated signal — so they need a real Postgres. Their fixture skips when
+    # none is reachable, which is right on a laptop and wrong here: without this service they
+    # would pass by not running.
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.6-pg18-trixie
+        env:
+          POSTGRES_USER: job_agent
+          POSTGRES_PASSWORD: job_agent
+          POSTGRES_DB: job_agent
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U job_agent"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v7
 
@@ -44,7 +62,17 @@ jobs:
       - name: Type check
         run: uv run mypy src tests
 
+      - name: Apply migrations
+        env:
+          PGPASSWORD: job_agent
+        run: |
+          for f in migrations/*.sql; do
+            psql -h localhost -U job_agent -d job_agent -v ON_ERROR_STOP=1 -f "$f"
+          done
+
       - name: Test
+        env:
+          TEST_DATABASE_URL: postgresql://job_agent:job_agent@localhost:5432/job_agent
         run: uv run pytest
 
   audit:

@@ -1,0 +1,37 @@
+# Which sources to read, and on what basis. Adding a board is an entry here, not a new module:
+# `type` picks one of the mechanism adapters in this package.
+#
+#   rss              any site publishing RSS 2.0 or Atom
+#   sitemap_jsonld   any site publishing a sitemap plus schema.org JobPosting blocks
+#   manual           a local JSONL file you paste into
+#
+# `basis` is the legal/ethical justification, and it is not decoration — every entry must be
+# defensible in SOURCES.md before it is switched on.
+
+sources:
+  - name: justjoin
+    type: sitemap_jsonld
+    enabled: true
+    sitemap: https://justjoin.it/sitemaps/active-jobs/part0.xml
+    # robots.txt advertises this sitemap with a `Sitemap:` directive, and places no rule on
+    # /job-offer/. It does say `Disallow: /api/`, so the board's JSON API stays untouched —
+    # this adapter has no code path to it. Verified 2026-08-28.
+    basis_note: sitemap advertised in robots.txt; offer pages not disallowed
+    min_interval_s: 86400   # the sitemap changes daily; asking more often buys nothing
+    max_fetches: 200        # per cycle, so a first run cannot look like a crawl
+    delay_s: 1.0            # between offer pages
+
+  - name: nofluffjobs
+    type: rss
+    enabled: false          # switch on once SOURCES.md covers it
+    url: https://nofluffjobs.com/rss
+    # A feed is published to be read. Note the path: /api/rss serves the same content but sits
+    # under `Disallow: /api/`, so /rss is the one to use. Verified 2026-08-28.
+    basis_note: public RSS feed at /rss; /api/rss avoided, robots disallows /api/
+    min_interval_s: 3600
+
+  - name: manual
+    type: manual
+    enabled: false
+    path: eval/offers.jsonl
+    basis_note: pasted by hand
