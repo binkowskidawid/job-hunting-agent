@@ -5,8 +5,16 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+# A branch that gets three pushes in a minute should run its checks once, on the last one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -20,10 +28,10 @@ jobs:
         run: uv python install 3.14
 
       - name: Install dependencies
-        run: uv sync --all-extras
+        run: uv sync --locked
 
       - name: Lint
-        run: uv run ruff check .
+        run: uv run ruff check --output-format=github .
 
       - name: Format check
         run: uv run ruff format --check .
@@ -33,3 +41,29 @@ jobs:
 
       - name: Test
         run: uv run pytest
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.14
+
+      - name: Audit dependencies
+        run: uv audit --frozen --preview-features audit-command
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # The image is how this project is actually run. Without this job a Dockerfile that
+      # no longer builds ships green, and the failure surfaces on someone else's clone.
+      - name: Build the app image
+        run: docker build --tag job-hunting-agent:ci .
