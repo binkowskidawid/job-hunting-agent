@@ -1,0 +1,28 @@
+# Copy to profile.yaml and describe yourself. Written by hand, never by a model: this is the
+# text every offer is compared against on day one, before you have rated anything.
+#
+# `context` is the part that does the work. "Python" barely separates two backend roles; the
+# sentence saying what you built with it does. Write two useful sentences, not a keyword.
+
+target_roles:                 # EDIT ME — the roles you want next, not your last job title
+  - Senior Backend Engineer
+
+years_experience: 0           # EDIT ME
+
+competencies:                 # EDIT ME — level: expert | proficient | basic | familiar
+  - name: Python
+    level: proficient
+    years: 0
+    context: >
+      Replace this with what you actually did: the systems, the scale, the hard part.
+
+  - name: PostgreSQL
+    level: basic
+    context: >
+      Omit `years` when you cannot state it honestly.
+
+domains: []                   # EDIT ME — fintech, e-commerce, healthcare, ...
+languages: []                 # EDIT ME — Polish (native), English (C1), ...
+
+differentiators: []           # EDIT ME — rare *combinations*, not individual common skills.
+                              # "Backend + DevOps in one person" separates you; "Git" does not.

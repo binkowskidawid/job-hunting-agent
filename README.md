@@ -57,7 +57,7 @@ job-hunting-agent/
 │   ├── domain/          # Offer — the schema every adapter and stage shares
 │   ├── sources/         # One Adapter subclass per data source
 │   ├── ingest/          # Deduplication
-│   ├── profile/         # Hand-written profile.yaml + hand-edited filters.yaml
+│   ├── candidate/       # Hand-written profile.yaml + hand-edited filters.yaml
 │   ├── scoring/         # filter.py -> similarity.py -> decision.py -> judge.py, glued by cascade.py
 │   ├── learning/        # Cold-start weights and weighted, time-decayed centroids
 │   ├── discord_bot/     # Rating UI

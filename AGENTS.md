@@ -54,7 +54,7 @@ installing anything. `tests/`, `prompts/`, and `migrations/` stay at the repo ro
 | `src/domain/` | `Offer` — the schema every source adapter and every downstream stage shares |
 | `src/sources/` | One `Adapter` subclass per data source, each declaring a legal/ethical `basis` |
 | `src/ingest/` | Deduplication (`identity_key`, `save`) |
-| `src/profile/` | Hand-written `profile.yaml` (competencies) + hand-edited `filters.yaml` (thresholds) |
+| `src/candidate/` | Hand-written `profile.yaml` (competencies) + hand-edited `filters.yaml` (thresholds) |
 | `src/scoring/` | The cascade: `filter.py` -> `similarity.py` -> `decision.py` -> `judge.py`, glued by `cascade.py` |
 | `src/learning/` | Cold-start weights and weighted, time-decayed centroids |
 | `src/discord_bot/` | Rating UI |
@@ -94,7 +94,7 @@ was cut for the reason given, and the scaffold code for it is recoverable with
   in the pipeline, that's a signal the cheaper stages need better features, not that the LLM
   should move up.
 - **Config over code**: business thresholds (salary minimums, stop words, tech vetoes) live in
-  `src/profile/filters.yaml`, never hardcoded in Python — this makes them git-diffable
+  `src/candidate/filters.yaml`, never hardcoded in Python — this makes them git-diffable
   decisions.
 - **Provenance**: any model-produced field that drives a decision (the judge verdict) carries
   a confidence and/or a verbatim source quote. The competency profile is hand-written, so it
