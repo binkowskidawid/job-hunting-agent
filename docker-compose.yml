@@ -6,7 +6,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      # Postgres 18+ images want the mount at /var/lib/postgresql, not .../data: the
+      # entrypoint creates a major-version subdirectory beneath it so pg_upgrade --link
+      # works without crossing a mount boundary. Mounting .../data aborts on startup with
+      # "there appears to be PostgreSQL data in /var/lib/postgresql/data (unused
+      # mount/volume)".
+      - postgres_data:/var/lib/postgresql
       - ./migrations:/migrations:ro
     ports:
       - "127.0.0.1:5432:5432"
