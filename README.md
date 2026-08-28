@@ -13,18 +13,17 @@
 
 ---
 
-Job Hunting Agent watches your chosen job-posting sources, scores every offer against your CV
-and your revealed preferences, and gets better over time from a single tap on a Discord
-notification — great, maybe, pass, or never again. No model fine-tuning, no manual rule
-tuning: the cascade recalibrates itself from your feedback.
+Job Hunting Agent watches your chosen job-posting sources, scores every offer against your
+profile and your revealed preferences, and gets better over time from a single tap on a
+Discord notification — great, maybe, pass, or never again. No model fine-tuning: the weights
+behind the decision shift as your ratings accumulate.
 
 ## ✨ Features
 
 - 🔌 **Pluggable sources** — every source is an `Adapter` subclass declaring its own legal/ethical `basis`; adding one never touches the rest of the pipeline
 - 💸 **Cost-first scoring cascade** — free rule-based filter → free local vector similarity + k-NN against your own ratings → one paid LLM judge call, only for offers in the uncertain zone
 - 🔔 **One-tap Discord ratings** — a card per offer with `great` / `maybe` / `pass` / `never_again` buttons, idempotent sends enforced at the database level
-- 🧠 **Continuous learning** — every rating updates weighted centroids, recalibrates decision thresholds, refreshes few-shot examples for the judge, and deliberately explores some below-threshold offers to avoid a feedback-loop filter bubble
-- ✉️ **Optional recruiter-message extension** — a LangGraph tool-calling agent that drafts replies with capped iterations/cost and a human-approval step; it can never send a message or contact a recruiter itself
+- 🧠 **Learning from ratings** — every rating updates weighted, time-decayed centroids, and the signal weights shift as the rating count grows, so the system leans on your CV on day one and on your revealed preferences later
 - 🐳 **One-command self-hosting** — `make up` builds Postgres+pgvector, Ollama, and the app, then pulls the embedding model automatically
 
 ## 🏗️ Architecture
@@ -49,7 +48,6 @@ catches, that's a signal to improve the cheaper stage — not to move the LLM ea
 | LLM judge | Anthropic API | via a single `LLMClient.structured()` gate |
 | Notifications | discord.py | rating buttons, idempotent sends |
 | Scheduling | APScheduler | idempotent ingest cycle |
-| Optional extension | FastAPI + LangGraph | recruiter-message drafting agent only |
 
 ## 📁 Project Structure
 
@@ -58,16 +56,15 @@ job-hunting-agent/
 ├── src/
 │   ├── domain/          # Offer — the schema every adapter and stage shares
 │   ├── sources/         # One Adapter subclass per data source
-│   ├── ingest/          # Deduplication and source health monitoring
-│   ├── profile/         # CV -> CVCompetencies + hand-edited filters.yaml
+│   ├── ingest/          # Deduplication
+│   ├── profile/         # Hand-written profile.yaml + hand-edited filters.yaml
 │   ├── scoring/         # filter.py -> similarity.py -> decision.py -> judge.py, glued by cascade.py
-│   ├── learning/         # Cold-start weights, centroids, calibration, few-shot examples, exploration
+│   ├── learning/        # Cold-start weights and weighted, time-decayed centroids
 │   ├── discord_bot/     # Rating UI
 │   ├── orchestration/   # Scheduler and the idempotent ingest cycle
-│   ├── extension/       # Optional: recruiter-message drafting agent (LangGraph)
-│   ├── tools/, api/     # Optional: FastAPI surface for the extension
-│   ├── evals/           # Golden-set tests and manual rejection audits
+│   ├── db.py            # The only path to Postgres — one async pool
 │   └── llm_client.py    # The only path to the Anthropic API
+├── eval/                 # Reference set: real offers + recorded responses (drives `make demo`)
 ├── tests/
 ├── prompts/
 ├── migrations/           # Plain, numbered SQL files (001_init.sql, ...)
@@ -76,7 +73,7 @@ job-hunting-agent/
 └── Makefile
 ```
 
-See [CLAUDE.md](./CLAUDE.md) for the full module map and engineering rules.
+See [AGENTS.md](./AGENTS.md) for the full module map and engineering rules.
 
 ## 🚀 Quick Start
 
@@ -103,8 +100,7 @@ This builds and starts PostgreSQL (with `pgvector`), Ollama, and the app, then p
 `nomic-embed-text` embedding model into Ollama — one command, nothing to set up by hand.
 
 ```bash
-make extension-up   # optional: recruiter-message drafting API on top of the base stack
-make help            # every available command
+make help   # every available command
 ```
 
 ### Local development without Docker
@@ -116,8 +112,17 @@ make check   # lint + typecheck + test, mirrors CI exactly
 
 ## 📌 Status
 
-Early development — most modules are currently stubs, with interfaces defined but not yet
-implemented. See [CLAUDE.md](./CLAUDE.md) for the architecture and module map.
+Pre-v0.1. The scope was cut to one vertical slice that runs end to end, and it is being
+implemented now — the sections above describe that slice, not a shipped release. `make up`
+does not yet complete a full ingest cycle.
+
+What already works: `LLMClient` (forced structured output, cost tracking, prompt caching) and
+the database schema. Everything else in the pipeline is being written. The previous full
+scaffold — 43 modules, most of them unimplemented — is preserved under the tag
+`v0.0-scaffold`.
+
+See [AGENTS.md](./AGENTS.md) for the module map, the engineering rules, and the explicit list
+of what is deliberately out of scope.
 
 ## 🤝 Contributing
 
