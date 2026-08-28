@@ -9,7 +9,7 @@ export
 POSTGRES_USER ?= job_agent
 POSTGRES_DB ?= job_agent
 
-.PHONY: help up down build logs ps pull-models extension-up \
+.PHONY: help up down build logs ps pull-models \
 	sync lint format typecheck test check migrate clean install-hooks
 
 help: ## Show available commands
@@ -38,11 +38,8 @@ ps: ## Show container status
 pull-models: ## Re-run the Ollama embedding-model pull (idempotent)
 	./scripts/ollama-pull-models.sh
 
-extension-up: ## Start the optional recruiter-message extension API on top of the base stack
-	$(COMPOSE) --profile extension up -d --build
-
 sync: ## Install/refresh local dependencies (fast lint/typecheck/test loop, no Docker)
-	uv sync --all-extras
+	uv sync
 
 lint: ## Run ruff (lint + format check)
 	uv run ruff check .

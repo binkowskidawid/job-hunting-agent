@@ -75,7 +75,7 @@ By participating in this project, you agree to abide by our [Code of Conduct](./
 ## Project Structure
 
 All application code lives under `src/`, as flat packages (no wrapper package name) — see
-`CLAUDE.md` for why. `tests/`, `prompts/`, and `migrations/` stay at the repo root.
+`AGENTS.md` for why. `tests/`, `prompts/`, and `migrations/` stay at the repo root.
 
 | Directory | Purpose |
 | --- | --- |

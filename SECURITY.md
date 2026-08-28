@@ -59,7 +59,7 @@ This project is designed to be self-hosted, for a single user, via Docker Compos
 ### Data Sourcing
 
 - This project's design explicitly avoids collecting recruiters' personal data and avoids
-  redistributing job-posting content — see the source-adapter guidelines in `CLAUDE.md`
+  redistributing job-posting content — see the source-adapter guidelines in `AGENTS.md`
 - Adapters that hit real job-board APIs must declare a `basis` (`official_api` / `rss_feed` /
   `email_alert` / `manual`) — undocumented scraping is out of scope for what this project
   should be extended to do

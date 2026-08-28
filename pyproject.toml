@@ -9,20 +9,11 @@ dependencies = [
     "apscheduler>=3.11.3",
     "discord-py>=2.7.1",
     "httpx>=0.28.1",
-    "imap-tools>=1.14.0",
     "numpy>=2.5.1",
     "ollama>=0.6.2",
     "psycopg[binary]>=3.3.4",
     "pydantic>=2.13.4",
-]
-
-[project.optional-dependencies]
-ml = ["scikit-learn"]
-extension = [
-    "fastapi>=0.141.1",
-    "langgraph",
-    "langgraph-checkpoint-postgres",
-    "uvicorn>=0.52.1",
+    "pyyaml>=6.0.3",
 ]
 
 [tool.uv]
@@ -32,9 +23,29 @@ package = false
 line-length = 100
 target-version = "py314"
 src = ["src", "tests"]
+# Ruff formats Python blocks inside Markdown, and docs/ holds local working notes whose
+# code samples are quoted material, not project source. Excluded explicitly rather than
+# relying on .gitignore, which ruff only honours inside a git work tree.
+extend-exclude = ["docs"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
+select = [
+    "E",      # pycodestyle errors
+    "F",      # pyflakes
+    "I",      # import sorting
+    "UP",     # pyupgrade
+    "B",      # bugbear
+    "SIM",    # simplify
+    "RUF",    # ruff-specific
+    "ASYNC",  # blocking calls inside async def — this codebase is async end to end
+    "S",      # bandit; S506 is what keeps yaml.load out of the config loaders
+    "PTH",    # prefer pathlib over os.path
+]
+
+[tool.ruff.lint.per-file-ignores]
+# pytest is built on assert statements, and fixture credentials read to bandit as
+# hardcoded secrets.
+"tests/*" = ["S101", "S105", "S106"]
 
 [tool.mypy]
 python_version = "3.14"
@@ -59,4 +70,5 @@ dev = [
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
     "ruff>=0.16.1",
+    "types-pyyaml>=6.0.12.20260815",
 ]
