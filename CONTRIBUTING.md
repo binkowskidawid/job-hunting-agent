@@ -82,7 +82,7 @@ All application code lives under `src/`, as flat packages (no wrapper package na
 | `src/domain/` | Core data models (e.g. `Offer`) shared across the whole pipeline |
 | `src/sources/` | Adapters for job-posting sources — one class per source |
 | `src/ingest/` | Deduplication and source health monitoring |
-| `src/profile/` | CV-derived competency profile and hard filters |
+| `src/candidate/` | Hand-written competency profile and hard filters |
 | `src/scoring/` | The cost-aware scoring cascade (filter -> similarity -> LLM judge) |
 | `src/learning/` | Preference learning: centroids, calibration, exploration, drift detection |
 | `src/discord_bot/` | The rating UI |
