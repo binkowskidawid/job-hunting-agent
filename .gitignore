@@ -11,7 +11,9 @@ __pycache__/
 *.egg-info/
 
 # Env / secrets
-.env
+# The glob, not a bare `.env`: an editor's `.env.save`, a `.env.local`, or a hand-made
+# `.env.bak` carries the same API key and would otherwise be committable.
+.env*
 !.env.example
 
 # Your filled-in configuration. filters.yaml holds your salary floor and profile.yaml holds
@@ -23,4 +25,9 @@ src/candidate/profile.yaml
 # OS / editor
 .DS_Store
 .idea/
-.vscode/
+# `.vscode/*`, not `.vscode/`: git refuses to re-include a file whose parent directory is
+# excluded, so a trailing-slash pattern would make the exception below silently dead.
+.vscode/*
+# The one exception: formatter settings are a project decision, not a machine preference —
+# an editor wrapping at a different width than ruff breaks CI on every commit.
+!.vscode/settings.json
