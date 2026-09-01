@@ -1,0 +1,13 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  // Import sorting belongs to ruff's `I` ruleset; Pylance would order them differently.
+  "python.analysis.fixAll": [],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
+}
