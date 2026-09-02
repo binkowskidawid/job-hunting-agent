@@ -35,6 +35,8 @@ UNSUPPORTED_SCHEMA_KEYS = frozenset(
         "multipleOf",
         "minLength",
         "maxLength",
+        "minItems",
+        "maxItems",
     }
 )
 
