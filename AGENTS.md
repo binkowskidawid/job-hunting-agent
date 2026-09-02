@@ -67,7 +67,9 @@ installing anything. `tests/`, `prompts/`, and `migrations/` stay at the repo ro
 
 v0.1 is one vertical slice that runs end to end: RSS/Atom ingest → dedup → rule filter →
 local vector similarity → decision → LLM judge for the uncertain zone → Discord card →
-rating → centroid update. Everything in `src/` is implemented; there are no stubs on `main`.
+rating → centroid update. Ingest and the full scoring cascade are implemented; the rating loop
+(`discord_bot/`, `learning/centroids.py`, `learning/update_profile.py`, `orchestration/`,
+`main.py`) still raises `NotImplementedError`. `docs/learning/progress.md` tracks what is done.
 
 Deliberately **out of scope** for v0.1. Do not add these back without being asked — each one
 was cut for the reason given, and the scaffold code for it is recoverable with

@@ -75,7 +75,7 @@ def similarity_score(
     }
 
 
-def _vector_literal(vector: npt.NDArray[np.float64]) -> str:
+def vector_literal(vector: npt.NDArray[np.float64]) -> str:
     return "[" + ",".join(repr(float(x)) for x in vector) + "]"
 
 
@@ -88,7 +88,7 @@ async def knn_score(
     conn: AsyncConnection[DictRow], vector: npt.NDArray[np.float64], k: int = 7
 ) -> dict[str, Any] | None:
     """How the k offers most similar to this one were rated. None below k ratings."""
-    literal = _vector_literal(vector)
+    literal = vector_literal(vector)
     async with conn.cursor() as cur:
         await cur.execute(
             """
